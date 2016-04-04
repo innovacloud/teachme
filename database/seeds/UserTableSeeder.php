@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Database\Seeder;
 use TeachMe\Entities\User;
+use Faker\Factory as Faker;
 
 /**
  * Created by PhpStorm.
@@ -13,6 +14,7 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         $this->createAdmin();
+        $this->createUsers(50);
     }
 
     public function createAdmin()
@@ -25,4 +27,17 @@ class UserTableSeeder extends Seeder
         ]);
     }
 
+    public function createUsers($total_reg)
+    {
+        $faker = Faker::create();
+
+        for ( $i = 0; $i < $total_reg; $i++) {
+            User::create([
+                'name'      =>  $faker->name,
+                'email'     =>  $faker->email,
+                'password'  =>  bcrypt('user'),
+                'type'      =>  'user'
+            ]);
+        }
+    }
 }
